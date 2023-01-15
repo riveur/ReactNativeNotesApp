@@ -1,19 +1,53 @@
-import { View, StyleSheet, Text, TouchableOpacity, FlatList, SafeAreaView } from "react-native";
-import { useNotes } from "../hooks/notes";
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, ToastAndroid } from "react-native";
 import NoteRow from '../components/Notes/NoteRow'
 import EmptyNotes from "../components/Notes/EmptyNotes";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../contexts";
+import NoteActionsModal from "../components/Notes/NoteActionsModal";
 
 export default function Home({ navigation }) {
-    const { notes } = useContext(AppContext)
+    const { notes, writeNotes } = useContext(AppContext)
+
+    const [selectedNote, setSelectedNote] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const onLongPressItem = (item) => {
+        setIsModalOpen(!isModalOpen)
+        setSelectedNote(notes.find(n => n.id === item.id))
+    }
+
+    const onCloseModal = () => {
+        setIsModalOpen(!isModalOpen)
+        setSelectedNote(null)
+    }
+
+    const onPressEditItem = () => {
+        navigation.navigate('Notes.edit', { note: selectedNote })
+    }
+
+    const onPressDeleteItem = () => {
+        writeNotes(notes.filter(n => n.id !== selectedNote.id))
+        onCloseModal()
+        ToastAndroid.showWithGravity(
+            'Supprimé',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM
+        )
+    }
 
     return (
-        <SafeAreaView style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
+            <NoteActionsModal
+                visible={isModalOpen}
+                onRequestClose={() => onCloseModal()}
+                onPressEdit={() => onPressEditItem()}
+                onPressDelete={() => onPressDeleteItem()}
+                data={selectedNote}
+            />
             {notes.length !== 0 ?
                 <FlatList
                     data={notes}
-                    renderItem={(item) => <NoteRow item={item} />}
+                    renderItem={(item) => <NoteRow note={item.item} onLongPress={() => onLongPressItem(item.item)} />}
                     keyExtractor={item => item.id}
                 /> :
                 <EmptyNotes message='Pas de notes pour le moment' />
@@ -23,7 +57,7 @@ export default function Home({ navigation }) {
                     <Text style={{ fontSize: 32, color: '#ffffff' }}>+</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

@@ -8,7 +8,7 @@ export function useNotes(storageKey) {
 
     const readNotes = async () => {
         const item = await getItem();
-        setNotes(JSON.parse(item));
+        setNotes(item !== null ? JSON.parse(item) : []);
     };
 
     const writeNotes = async (newValue) => {
