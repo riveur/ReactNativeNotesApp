@@ -2,9 +2,11 @@ import { View, StyleSheet, Text, TouchableOpacity, FlatList, SafeAreaView } from
 import { useNotes } from "../hooks/notes";
 import NoteRow from '../components/Notes/NoteRow'
 import EmptyNotes from "../components/Notes/EmptyNotes";
+import { useContext } from "react";
+import { AppContext } from "../contexts";
 
 export default function Home({ navigation }) {
-    const { notes } = useNotes('notes')
+    const { notes } = useContext(AppContext)
 
     return (
         <SafeAreaView style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>

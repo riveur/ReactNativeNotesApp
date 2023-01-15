@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import uuid from 'react-native-uuid'
-import { useNotes } from '../../hooks/notes';
+import { AppContext } from '../../contexts';
 
 export default function NoteCreate({ navigation }) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
-    const { notes, setNotes, writeNotes } = useNotes('notes')
+    const { notes, writeNotes } = useContext(AppContext)
 
     const resetNote = () => {
         setTitle('')
