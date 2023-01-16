@@ -4,14 +4,14 @@ import uuid from 'react-native-uuid'
 import EditorHeader from '../../components/Headers/EditorHeader';
 import NoteForm from '../../components/Notes/NoteForm';
 import { AppContext } from '../../contexts';
-import { primaryColor } from '../../styles';
+import { primaryColor, randomNoteColor } from '../../styles';
 
 export default function NoteCreate({ navigation }) {
     const { notes, writeNotes } = useContext(AppContext)
     const formRef = useRef(null)
 
     const onSubmit = async ({ title, description }) => {
-        writeNotes([...notes, { id: uuid.v4(), title, description }])
+        writeNotes([...notes, { id: uuid.v4(), title, description, bgColor: randomNoteColor() }])
         navigation.navigate('Home')
     }
 

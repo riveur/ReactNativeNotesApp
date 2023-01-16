@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function NoteRow({ note, onLongPress }) {
     return (
         <TouchableOpacity onLongPress={onLongPress}>
-            <View style={styles.container}>
+            <View style={{ ...styles.container, backgroundColor: note.bgColor || styles.container.backgroundColor }}>
                 <Text style={styles.title}>{note.title}</Text>
                 <Text style={styles.description}>{note.description}</Text>
             </View>
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
     justifyCenter: {},
     container: {
-        backgroundColor: '#FF9E9E',
+        backgroundColor: '#ffffff',
         paddingVertical: 22,
         borderRadius: 10,
         marginHorizontal: 25,

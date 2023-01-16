@@ -3,16 +3,13 @@ import Button from "../Button"
 import { FontAwesome } from '@expo/vector-icons'
 import { primaryColor } from "../../styles"
 
-export default function EditorHeader({ onPressRead, onPressSave, onPressBack }) {
+export default function EditorHeader({ onPressSave, onPressBack }) {
     return (
         <View style={styles.container}>
             <Button onPress={onPressBack}>
                 <FontAwesome name="chevron-left" size={20} style={styles.headerTextColor} />
             </Button>
             <View style={styles.actionsContainer}>
-                <Button onPress={onPressRead}>
-                    <FontAwesome name='eye' size={20} style={styles.headerTextColor} />
-                </Button>
                 <Button onPress={onPressSave}>
                     <FontAwesome name='save' size={20} style={styles.headerTextColor} />
                 </Button>
