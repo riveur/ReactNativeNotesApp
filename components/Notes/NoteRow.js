@@ -5,23 +5,35 @@ export default function NoteRow({ note, onLongPress }) {
         <TouchableOpacity onLongPress={onLongPress}>
             <View style={styles.container}>
                 <Text style={styles.title}>{note.title}</Text>
-                <Text>{note.description}</Text>
+                <Text style={styles.description}>{note.description}</Text>
             </View>
         </TouchableOpacity >
     )
 }
 
 const styles = StyleSheet.create({
+    itemsCenter: {
+        alignItems: 'center'
+    },
+    justifyCenter: {},
     container: {
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 5,
-        margin: 10,
-        padding: 10
+        backgroundColor: '#FF9E9E',
+        paddingVertical: 22,
+        borderRadius: 10,
+        marginHorizontal: 25,
+        marginVertical: 12.5,
+        padding: 10,
+        paddingStart: 45,
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10
+        fontFamily: 'Nunito',
+        fontSize: 25,
+        fontWeight: '400',
+        lineHeight: 34,
+        marginBottom: 5
+    },
+    description: {
+        fontFamily: 'Nunito',
+        fontSize: 16
     }
 })

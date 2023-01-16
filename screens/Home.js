@@ -1,9 +1,12 @@
-import { View, StyleSheet, Text, TouchableOpacity, FlatList, ToastAndroid } from "react-native";
+import { View, StyleSheet, TouchableOpacity, FlatList, ToastAndroid } from "react-native";
 import NoteRow from '../components/Notes/NoteRow'
 import EmptyNotes from "../components/Notes/EmptyNotes";
 import { useContext, useState } from "react";
 import { AppContext } from "../contexts";
 import NoteActionsModal from "../components/Notes/NoteActionsModal";
+import { FontAwesome } from '@expo/vector-icons'
+import { darkColor, primaryColor } from "../styles";
+import HomeHeader from "../components/Headers/HomeHeader";
 
 export default function Home({ navigation }) {
     const { notes, writeNotes } = useContext(AppContext)
@@ -36,48 +39,61 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <View style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
-            <NoteActionsModal
-                visible={isModalOpen}
-                onRequestClose={() => onCloseModal()}
-                onPressEdit={() => onPressEditItem()}
-                onPressDelete={() => onPressDeleteItem()}
-                data={selectedNote}
-            />
-            {notes.length !== 0 ?
-                <FlatList
-                    data={notes}
-                    renderItem={(item) => <NoteRow note={item.item} onLongPress={() => onLongPressItem(item.item)} />}
-                    keyExtractor={item => item.id}
-                /> :
-                <EmptyNotes message='Pas de notes pour le moment' />
-            }
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.addButton} onPress={() => { navigation.navigate('Notes.create') }}>
-                    <Text style={{ fontSize: 32, color: '#ffffff' }}>+</Text>
-                </TouchableOpacity>
+        <>
+            <HomeHeader title='Notes' />
+            <View style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
+                <NoteActionsModal
+                    visible={isModalOpen}
+                    onRequestClose={() => onCloseModal()}
+                    onPressEdit={() => onPressEditItem()}
+                    onPressDelete={() => onPressDeleteItem()}
+                    data={selectedNote}
+                />
+                {notes.length !== 0 ?
+                    <FlatList
+                        data={notes}
+                        renderItem={(item) => <NoteRow note={item.item} onLongPress={() => onLongPressItem(item.item)} />}
+                        keyExtractor={item => item.id}
+                    /> :
+                    <EmptyNotes message='Crée ta première note !' />
+                }
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.addButton} onPress={() => { navigation.navigate('Notes.create') }}>
+                        <FontAwesome name="plus" size={21} style={{ color: 'white' }} />
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%'
+        width: '100%',
+        backgroundColor: primaryColor
     },
     buttonContainer: {
         position: 'absolute',
         right: 20,
         bottom: 20,
-        width: 60,
-        height: 60
+        width: 70,
+        height: 70,
     },
     addButton: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'gray',
-        borderRadius: 100
+        backgroundColor: darkColor,
+        borderRadius: 100,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 4,
+            height: 4,
+        },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+
+        elevation: 20,
     },
 })

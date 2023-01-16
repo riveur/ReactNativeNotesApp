@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
+import EditorHeader from "../../components/Headers/EditorHeader";
 import NoteForm from "../../components/Notes/NoteForm";
 import { AppContext } from "../../contexts";
+import { primaryColor } from "../../styles";
 
 export default function NoteEdit({ navigation, route }) {
     const { notes, writeNotes } = useContext(AppContext);
-
-    const { note } = route.params
+    const { note } = route.params;
+    const formRef = useRef(null);
 
     const onSubmit = ({ title, description }) => {
         writeNotes([...notes.filter(n => n.id !== note.id), { ...note, title, description }])
@@ -19,16 +21,24 @@ export default function NoteEdit({ navigation, route }) {
     }
 
     return (
-        <View style={styles.container}>
-            <NoteForm note={note} onSubmit={onSubmit} />
-        </View>
+        <>
+            <EditorHeader
+                onPressBack={() => navigation.goBack()}
+                onPressSave={() => formRef.current.onValidateForm()}
+            />
+            <View style={styles.container}>
+                <NoteForm ref={formRef} note={note} onSubmit={onSubmit} />
+            </View>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 20,
+        paddingHorizontal: 24,
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: primaryColor
     }
 })

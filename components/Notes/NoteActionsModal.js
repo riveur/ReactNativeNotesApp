@@ -1,4 +1,5 @@
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { dangerColor, infoColor, primaryColor } from "../../styles";
 
 export default function NoteActionsModal({ visible, onRequestClose, onPressEdit, onPressDelete, data }) {
     const confirmDelete = () => {
@@ -12,6 +13,7 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressEdit,
         <Modal
             visible={visible}
             transparent
+            animationType="fade"
             onRequestClose={onRequestClose}
         >
             <View style={styles.centeredView}>
@@ -20,7 +22,7 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressEdit,
                     <Pressable
                         style={({ pressed }) => [
                             { opacity: pressed ? 0.6 : 1 },
-                            styles.button
+                            { ...styles.button, backgroundColor: infoColor }
                         ]}
                         onPress={onPressEdit}
                     >
@@ -29,7 +31,7 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressEdit,
                     <Pressable
                         style={({ pressed }) => [
                             { opacity: pressed ? 0.6 : 1 },
-                            styles.button
+                            { ...styles.button, backgroundColor: dangerColor }
                         ]}
                         onPress={() => confirmDelete()}
                     >
@@ -38,11 +40,11 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressEdit,
                     <Pressable
                         style={({ pressed }) => [
                             { opacity: pressed ? 0.6 : 1 },
-                            { ...styles.button, backgroundColor: 'white' }
+                            styles.button
                         ]}
                         onPress={onRequestClose}
                     >
-                        <Text style={{ ...styles.buttonText, color: 'black' }}>Fermer</Text>
+                        <Text style={styles.buttonText}>Fermer</Text>
                     </Pressable>
                 </View>
             </View>
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'black',
+        backgroundColor: primaryColor,
         width: '100%'
     },
     buttonText: {

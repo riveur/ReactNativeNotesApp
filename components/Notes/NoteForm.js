@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { forwardRef, useState } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
+import { placeholderColor } from "../../styles";
 
-export default function NoteForm({ note, onSubmit }) {
+const NoteForm = forwardRef(({ note, onSubmit }, ref) => {
     const [title, setTitle] = useState(note?.title !== undefined ? note.title : '')
     const [description, setDescription] = useState(note?.description !== undefined ? note.description : '')
 
@@ -10,40 +11,66 @@ export default function NoteForm({ note, onSubmit }) {
         setDescription('')
     }
 
+    const onValidateForm = () => {
+        onSubmit({ title, description })
+        resetNote()
+    }
+
+    if (ref) {
+        ref.current = { onValidateForm }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.formGroup}>
-                <Text style={styles.formGroupTitle}>Title</Text>
-                <TextInput style={styles.input} editable placeholder='New note...' value={title} onChangeText={(text) => { setTitle(text) }} />
+                <TextInput
+                    style={{
+                        ...styles.input,
+                        lineHeight: 65,
+                        fontSize: 48,
+                        fontWeight: '400'
+                    }}
+                    editable
+                    placeholder='Titre'
+                    placeholderTextColor={placeholderColor}
+                    value={title}
+                    onChangeText={(text) => { setTitle(text) }}
+                    multiline
+                />
             </View>
             <View style={styles.formGroup}>
-                <Text style={styles.formGroupTitle}>Description</Text>
-                <TextInput editable multiline numberOfLines={5} style={{ ...styles.input, textAlignVertical: 'top' }} placeholder='Description...' value={description} onChangeText={(text) => { setDescription(text) }} />
+                <TextInput
+                    style={{
+                        ...styles.input,
+                        textAlignVertical: 'top',
+                        lineHeight: 31,
+                        fontSize: 23,
+                        fontWeight: '300',
+                    }}
+                    editable
+                    placeholder='Description...'
+                    placeholderTextColor={placeholderColor}
+                    value={description}
+                    onChangeText={(text) => { setDescription(text) }}
+                    multiline
+                />
             </View>
-            <Button title='Valider' onPress={() => {
-                onSubmit({ title, description })
-                resetNote()
-            }} />
         </View >
     )
-}
+})
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
+        width: '100%',
     },
     input: {
+        fontFamily: 'Nunito',
         width: '100%',
-        borderWidth: 1,
-        padding: 10,
-        paddingHorizontal: 15,
-        backgroundColor: '#ffffff',
-        borderRadius: 5
+        color: '#ffffff'
     },
     formGroup: {
-        marginBottom: 15
-    },
-    formGroupTitle: {
-        marginBottom: 5
+        marginBottom: 40
     }
 });
+
+export default NoteForm;
