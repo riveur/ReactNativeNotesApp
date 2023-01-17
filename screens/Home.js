@@ -36,7 +36,10 @@ export default function Home({ navigation }) {
 
     return (
         <>
-            <HomeHeader title='Notes' />
+            <HomeHeader
+                title='Notes'
+                onPressSearch={() => navigation.navigate('Notes.search')}
+            />
             <View style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
                 <NoteActionsModal
                     visible={isModalOpen}
