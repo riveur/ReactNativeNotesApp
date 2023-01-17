@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-native"
+
 export const primaryColor = '#252525'
 export const secondaryColor = '#3B3B3B'
 export const darkColor = '#252525'
@@ -17,3 +19,22 @@ const noteColors = [
 export const randomNoteColor = () => {
     return noteColors[Math.floor(Math.random() * noteColors.length)]
 }
+
+export const iconSize = 20
+
+export const headerStyle = StyleSheet.create({
+    title: {
+        fontFamily: 'Nunito',
+        fontWeight: '600',
+        fontSize: 43,
+        lineHeight: 59
+    },
+    actionsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    },
+    headerTextColor: {
+        color: '#ffffff'
+    }
+})

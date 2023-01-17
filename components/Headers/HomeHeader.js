@@ -1,46 +1,21 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import Button from "../Button"
 import { FontAwesome } from '@expo/vector-icons'
-import { primaryColor } from "../../styles"
+import { headerStyle as styles, iconSize } from "../../styles"
+import HeaderBase from "./HeaderBase"
 
 export default function HomeHeader({ onPressSearch, onPressInfo, title }) {
     return (
-        <View style={styles.container}>
+        <HeaderBase>
             <Text style={[styles.title, styles.headerTextColor]}>{title}</Text>
             <View style={styles.actionsContainer}>
                 <Button onPress={onPressSearch}>
-                    <FontAwesome name='search' size={20} style={styles.headerTextColor} />
+                    <FontAwesome name='search' size={iconSize} style={styles.headerTextColor} />
                 </Button>
                 <Button onPress={onPressInfo}>
-                    <FontAwesome name='info-circle' size={20} style={styles.headerTextColor} />
+                    <FontAwesome name='info-circle' size={iconSize} style={styles.headerTextColor} />
                 </Button>
             </View>
-        </View>
+        </HeaderBase>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        paddingBottom: 15,
-        paddingTop: 24,
-        paddingHorizontal: 24,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: primaryColor
-    },
-    title: {
-        fontFamily: 'Nunito',
-        fontWeight: '600',
-        fontSize: 43,
-        lineHeight: 59
-    },
-    actionsContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    headerTextColor: {
-        color: '#ffffff'
-    }
-})
