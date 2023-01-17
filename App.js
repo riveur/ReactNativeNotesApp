@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import NoteCreate from './screens/Notes/NoteCreate'
 import NoteEdit from './screens/Notes/NoteEdit';
 import { primaryColor } from './styles';
+import NoteShow from './screens/Notes/NoteShow';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,13 @@ export default function App() {
                     <Stack.Screen
                         name='Home'
                         component={Home}
+                        options={{
+                            headerShown: false
+                        }}
+                    />
+                    <Stack.Screen
+                        name='Notes.show'
+                        component={NoteShow}
                         options={{
                             headerShown: false
                         }}

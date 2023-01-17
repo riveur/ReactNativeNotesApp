@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function NoteRow({ note, onLongPress }) {
+export default function NoteRow({ note, onLongPress, onPress }) {
     return (
-        <TouchableOpacity onLongPress={onLongPress}>
+        <TouchableOpacity onLongPress={onLongPress} onPress={onPress}>
             <View style={{ ...styles.container, backgroundColor: note.bgColor || styles.container.backgroundColor }}>
                 <Text style={styles.title}>{note.title}</Text>
                 <Text style={styles.description}>{note.description}</Text>

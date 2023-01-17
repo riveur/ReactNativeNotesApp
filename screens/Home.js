@@ -24,10 +24,6 @@ export default function Home({ navigation }) {
         setSelectedNote(null)
     }
 
-    const onPressEditItem = () => {
-        navigation.navigate('Notes.edit', { note: selectedNote })
-    }
-
     const onPressDeleteItem = () => {
         writeNotes(notes.filter(n => n.id !== selectedNote.id))
         onCloseModal()
@@ -45,14 +41,19 @@ export default function Home({ navigation }) {
                 <NoteActionsModal
                     visible={isModalOpen}
                     onRequestClose={() => onCloseModal()}
-                    onPressEdit={() => onPressEditItem()}
                     onPressDelete={() => onPressDeleteItem()}
                     data={selectedNote}
                 />
                 {notes.length !== 0 ?
                     <FlatList
                         data={notes}
-                        renderItem={(item) => <NoteRow note={item.item} onLongPress={() => onLongPressItem(item.item)} />}
+                        renderItem={
+                            (item) => <NoteRow
+                                note={item.item}
+                                onLongPress={() => onLongPressItem(item.item)}
+                                onPress={() => navigation.navigate('Notes.show', { note: item.item })}
+                            />
+                        }
                         keyExtractor={item => item.id}
                     /> :
                     <EmptyNotes message='Crée ta première note !' />

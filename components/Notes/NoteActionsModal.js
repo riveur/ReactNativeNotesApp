@@ -1,7 +1,7 @@
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { dangerColor, infoColor, primaryColor } from "../../styles";
+import { dangerColor, primaryColor } from "../../styles";
 
-export default function NoteActionsModal({ visible, onRequestClose, onPressEdit, onPressDelete, data }) {
+export default function NoteActionsModal({ visible, onRequestClose, onPressDelete, data }) {
     const confirmDelete = () => {
         Alert.alert('Confirmation', 'Êtes-vous sûr de vouloir supprimer cet élément ?', [
             { text: 'Non' },
@@ -19,15 +19,6 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressEdit,
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.title}>{data?.title}</Text>
-                    <Pressable
-                        style={({ pressed }) => [
-                            { opacity: pressed ? 0.6 : 1 },
-                            { ...styles.button, backgroundColor: infoColor }
-                        ]}
-                        onPress={onPressEdit}
-                    >
-                        <Text style={styles.buttonText}>Modifier</Text>
-                    </Pressable>
                     <Pressable
                         style={({ pressed }) => [
                             { opacity: pressed ? 0.6 : 1 },
