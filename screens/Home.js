@@ -94,6 +94,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         shadowRadius: 3,
 
-        elevation: 20,
+        elevation: 5,
     },
 })
