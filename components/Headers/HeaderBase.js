@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native"
+import { StatusBar, StyleSheet, View } from "react-native"
 import { primaryColor } from "../../styles"
 
 export default function HeaderBase({ children }) {

@@ -30,6 +30,7 @@ export default function App() {
 
     return (
         <AppContext.Provider value={{ notes, setNotes, readNotes, writeNotes }}>
+            <StatusBar backgroundColor={primaryColor} showHideTransition='slide' />
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen
@@ -63,12 +64,11 @@ export default function App() {
                     <Stack.Screen
                         name='Notes.edit'
                         component={NoteEdit}
-                        options={({ route }) => ({
+                        options={{
                             headerShown: false
-                        })}
+                        }}
                     />
                 </Stack.Navigator>
-                <StatusBar style='auto' />
             </NavigationContainer>
         </AppContext.Provider>
     );
