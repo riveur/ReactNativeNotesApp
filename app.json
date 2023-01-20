@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ReactNativeNotesApp",
-    "slug": "ReactNativeNotesApp",
+    "name": "Notes",
+    "slug": "react-native-notes-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.riveur.ReactNativeNotesApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "23aff308-9513-4c8e-ae05-513f2a5b848c"
+      }
     }
   }
 }
