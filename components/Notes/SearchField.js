@@ -6,6 +6,7 @@ export default function SearchField({ onChange, onChangeText, value, onPressCanc
     return (
         <View style={styles.container}>
             <TextInput
+                autoFocus
                 placeholder="Rechercher un mot clé..."
                 placeholderTextColor={styles.input.color}
                 style={styles.input}
