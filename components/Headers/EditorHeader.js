@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { headerStyle as styles, iconSize } from "../../styles"
 import HeaderBase from "./HeaderBase"
 
-export default function EditorHeader({ onPressSave, onPressBack }) {
+export default function EditorHeader({ onPressSave, onPressBack, editState }) {
     return (
         <HeaderBase>
             <Button onPress={onPressBack}>
@@ -12,7 +12,7 @@ export default function EditorHeader({ onPressSave, onPressBack }) {
             </Button>
             <View style={styles.actionsContainer}>
                 <Button onPress={onPressSave}>
-                    <FontAwesome name='save' size={iconSize} style={styles.headerTextColor} />
+                    <FontAwesome name={editState ? 'save' : 'edit'} size={iconSize} style={styles.headerTextColor} />
                 </Button>
             </View>
         </HeaderBase>

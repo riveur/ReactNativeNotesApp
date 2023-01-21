@@ -2,7 +2,7 @@ import { forwardRef, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { placeholderColor } from "../../styles";
 
-const NoteForm = forwardRef(({ note, onSubmit }, ref) => {
+const NoteForm = forwardRef(({ note, editState = true, onSubmit }, ref) => {
     const [title, setTitle] = useState(note?.title !== undefined ? note.title : '')
     const [description, setDescription] = useState(note?.description !== undefined ? note.description : '')
 
@@ -11,13 +11,13 @@ const NoteForm = forwardRef(({ note, onSubmit }, ref) => {
         setDescription('')
     }
 
-    const onValidateForm = () => {
+    const submit = () => {
         onSubmit({ title, description })
         resetNote()
     }
 
     if (ref) {
-        ref.current = { onValidateForm }
+        ref.current = { submit }
     }
 
     return (
@@ -30,7 +30,7 @@ const NoteForm = forwardRef(({ note, onSubmit }, ref) => {
                         fontSize: 48,
                         fontWeight: '400'
                     }}
-                    editable
+                    editable={editState}
                     placeholder='Titre'
                     placeholderTextColor={placeholderColor}
                     value={title}
@@ -47,7 +47,7 @@ const NoteForm = forwardRef(({ note, onSubmit }, ref) => {
                         fontSize: 23,
                         fontWeight: '300',
                     }}
-                    editable
+                    editable={editState}
                     placeholder='Description...'
                     placeholderTextColor={placeholderColor}
                     value={description}

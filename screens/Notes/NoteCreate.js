@@ -18,8 +18,9 @@ export default function NoteCreate({ navigation }) {
     return (
         <>
             <EditorHeader
+                editState={true}
                 onPressBack={() => navigation.goBack()}
-                onPressSave={() => formRef.current.onValidateForm()}
+                onPressSave={() => formRef?.current?.submit()}
             />
             <View style={styles.container}>
                 <NoteForm ref={formRef} onSubmit={onSubmit} />

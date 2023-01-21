@@ -5,8 +5,7 @@ import { AppContext } from './contexts';
 import { useNotes } from './hooks/notes';
 import { useFonts } from 'expo-font';
 import Home from './screens/Home';
-import NoteCreate from './screens/Notes/NoteCreate'
-import NoteEdit from './screens/Notes/NoteEdit';
+import NoteCreate from './screens/Notes/NoteCreate';
 import { primaryColor } from './styles';
 import NoteShow from './screens/Notes/NoteShow';
 import NoteSearch from './screens/Notes/NoteSearch';
@@ -57,13 +56,6 @@ export default function App() {
                     <Stack.Screen
                         name='Notes.create'
                         component={NoteCreate}
-                        options={{
-                            headerShown: false
-                        }}
-                    />
-                    <Stack.Screen
-                        name='Notes.edit'
-                        component={NoteEdit}
                         options={{
                             headerShown: false
                         }}
