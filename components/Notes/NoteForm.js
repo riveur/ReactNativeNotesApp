@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, ToastAndroid, View } from "react-native";
 import { placeholderColor } from "../../styles";
 
 const NoteForm = forwardRef(({ note, editState = true, onSubmit }, ref) => {
@@ -12,6 +12,14 @@ const NoteForm = forwardRef(({ note, editState = true, onSubmit }, ref) => {
     }
 
     const submit = () => {
+        if ([title.length, description.length].includes(0)) {
+            ToastAndroid.showWithGravity(
+                'Ecrivez votre note !',
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            )
+            return
+        }
         onSubmit({ title, description })
         resetNote()
     }
