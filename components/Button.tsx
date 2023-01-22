@@ -1,11 +1,9 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-/**
- * @returns {TouchableOpacity}
- */
-export default function Button({ children, onPress }) {
+const Button: React.FC<TouchableOpacityProps> = ({ children, ...rest }) => {
     return (
-        <TouchableOpacity onPress={onPress} style={styles.button}>
+        <TouchableOpacity style={styles.button} {...rest}>
             {children}
         </TouchableOpacity >
     )
@@ -21,4 +19,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 5
     }
-})
+});
+
+export default Button;

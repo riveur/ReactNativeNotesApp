@@ -1,22 +1,28 @@
 import { useContext, useState } from "react";
-import { AppContext } from '../../contexts'
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { AppContext } from "../../contexts";
+import { FlatList, NativeSyntheticEvent, StyleSheet, TextInputChangeEventData, View } from "react-native";
 import SearchField from "../../components/Notes/SearchField";
 import { primaryColor } from "../../styles";
 import NoteRow from "../../components/Notes/NoteRow";
-import EmptyNotes from "../../components/Notes/EmptyNotes";
 import NotFoundNotes from "../../components/Notes/NotFoundNotes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../App";
+import { Note } from "../../hooks/notes";
 
-export default function NoteSearch({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'Notes.search'>;
+
+const NoteSearch = ({ navigation }: Props) => {
     const [search, setSearch] = useState('')
-    const [filteredNotes, setFilteredNotes] = useState([])
+    const [filteredNotes, setFilteredNotes] = useState<Note[]>([])
     const { notes } = useContext(AppContext);
 
-    const onChange = ({ nativeEvent }) => {
+    const onChange = ({ nativeEvent }: NativeSyntheticEvent<TextInputChangeEventData>) => {
         if (nativeEvent.text === '') {
             setFilteredNotes([])
         } else {
-            setFilteredNotes(notes.filter(n => n.title.toLowerCase().includes(nativeEvent.text.toLowerCase())))
+            setFilteredNotes(
+                notes.filter(n => n.title.toLowerCase().includes(nativeEvent.text.toLowerCase()))
+            )
         }
     }
 
@@ -47,7 +53,7 @@ export default function NoteSearch({ navigation }) {
                     renderItem={
                         (item) => <NoteRow
                             note={item.item}
-                            onLongPress={() => onLongPressItem(item.item)}
+                            onLongPress={() => { }}
                             onPress={() => navigation.navigate('Notes.show', { note: item.item })}
                         />
                     }
@@ -71,4 +77,6 @@ const styles = StyleSheet.create({
         marginTop: 60,
         marginBottom: 37
     }
-})
+});
+
+export default NoteSearch;

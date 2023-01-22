@@ -1,6 +1,11 @@
+import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function EmptyNotes({ message }) {
+type Props = {
+    message: string;
+};
+
+const EmptyNotes: React.FC<Props> = ({ message }) => {
     return (
         <View style={styles.container}>
             <Image source={require('../../assets/illustrations/rafiki.png')} style={{ marginHorizontal: 32 }} />
@@ -21,4 +26,6 @@ const styles = StyleSheet.create({
         lineHeight: 27,
         color: '#ffffff'
     }
-})
+});
+
+export default EmptyNotes;

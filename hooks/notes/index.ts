@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
-export function useNotes(storageKey) {
-    const [notes, setNotes] = useState([])
+export type Note = {
+    id: string,
+    title: string,
+    description: string,
+    bgColor: string
+};
+
+export const useNotes = (storageKey: string) => {
+    const [notes, setNotes] = useState<Note[]>([])
 
     const { getItem, setItem } = useAsyncStorage(storageKey);
 
@@ -11,7 +18,7 @@ export function useNotes(storageKey) {
         setNotes(item !== null ? JSON.parse(item) : []);
     };
 
-    const writeNotes = async (newValue) => {
+    const writeNotes = async (newValue: Note[]) => {
         await setItem(JSON.stringify(newValue));
         setNotes(newValue);
     };

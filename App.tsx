@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, StatusBar, View } from 'react-native';
 import { AppContext } from './contexts';
-import { useNotes } from './hooks/notes';
+import { Note, useNotes } from './hooks/notes';
 import { useFonts } from 'expo-font';
 import Home from './screens/Home';
 import NoteCreate from './screens/Notes/NoteCreate';
@@ -10,7 +10,14 @@ import { primaryColor } from './styles';
 import NoteShow from './screens/Notes/NoteShow';
 import NoteSearch from './screens/Notes/NoteSearch';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+    'Home': undefined;
+    'Notes.search': undefined;
+    'Notes.show': { note: Note };
+    'Notes.create': undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
     const { notes, setNotes, readNotes, writeNotes } = useNotes('notes')

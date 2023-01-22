@@ -1,6 +1,14 @@
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Note } from "../../hooks/notes";
 
-export default function NoteRow({ note, onLongPress, onPress }) {
+type Props = {
+    note: Note;
+    onLongPress: () => any;
+    onPress: () => any;
+};
+
+const NoteRow: React.FC<Props> = ({ note, onLongPress, onPress }) => {
     return (
         <TouchableOpacity onLongPress={onLongPress} onPress={onPress}>
             <View style={{ ...styles.container, backgroundColor: note.bgColor || styles.container.backgroundColor }}>
@@ -36,4 +44,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito',
         fontSize: 16
     }
-})
+});
+
+export default NoteRow;

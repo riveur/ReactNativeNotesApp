@@ -1,32 +1,38 @@
-import { forwardRef, useState } from "react";
+import * as React from "react";
 import { StyleSheet, TextInput, ToastAndroid, View } from "react-native";
+import { Note } from "../../hooks/notes";
 import { placeholderColor } from "../../styles";
 
-const NoteForm = forwardRef(({ note, editState = true, onSubmit }, ref) => {
-    const [title, setTitle] = useState(note?.title !== undefined ? note.title : '')
-    const [description, setDescription] = useState(note?.description !== undefined ? note.description : '')
+export type FormProps = {
+    ref: React.ForwardedRef<unknown>;
+    note?: Note;
+    editState?: boolean;
+    onSubmit: ({ title, description }: { title: string, description: string }) => any
+};
+
+const NoteForm: React.FC<FormProps> = React.forwardRef(({ note, editState = true, onSubmit }, ref) => {
+    const [title, setTitle] = React.useState(note?.title !== undefined ? note.title : '')
+    const [description, setDescription] = React.useState(note?.description !== undefined ? note.description : '')
 
     const resetNote = () => {
         setTitle('')
         setDescription('')
     }
 
-    const submit = () => {
-        if ([title.length, description.length].includes(0)) {
-            ToastAndroid.showWithGravity(
-                'Ecrivez votre note !',
-                ToastAndroid.SHORT,
-                ToastAndroid.BOTTOM
-            )
-            return
+    React.useImperativeHandle(ref, () => ({
+        submit: () => {
+            if ([title.length, description.length].includes(0)) {
+                ToastAndroid.showWithGravity(
+                    'Ecrivez votre note !',
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM
+                )
+                return
+            }
+            onSubmit.call(this, { title, description })
+            resetNote()
         }
-        onSubmit({ title, description })
-        resetNote()
-    }
-
-    if (ref) {
-        ref.current = { submit }
-    }
+    }))
 
     return (
         <View style={styles.container}>

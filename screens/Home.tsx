@@ -1,37 +1,45 @@
 import { View, StyleSheet, TouchableOpacity, FlatList, ToastAndroid } from "react-native";
-import NoteRow from '../components/Notes/NoteRow'
+import NoteRow from "../components/Notes/NoteRow";
 import EmptyNotes from "../components/Notes/EmptyNotes";
 import { useContext, useState } from "react";
 import { AppContext } from "../contexts";
 import NoteActionsModal from "../components/Notes/NoteActionsModal";
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from "@expo/vector-icons";
 import { darkColor, primaryColor } from "../styles";
 import HomeHeader from "../components/Headers/HomeHeader";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../App";
+import { Note } from "../hooks/notes";
 
-export default function Home({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const Home = ({ navigation }: Props) => {
+
     const { notes, writeNotes } = useContext(AppContext)
 
-    const [selectedNote, setSelectedNote] = useState(null)
+    const [selectedNote, setSelectedNote] = useState<Note>()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const onLongPressItem = (item) => {
+    const onLongPressItem = (item: Note) => {
         setIsModalOpen(!isModalOpen)
         setSelectedNote(notes.find(n => n.id === item.id))
     }
 
     const onCloseModal = () => {
         setIsModalOpen(!isModalOpen)
-        setSelectedNote(null)
+        setSelectedNote(undefined)
     }
 
     const onPressDeleteItem = () => {
-        writeNotes(notes.filter(n => n.id !== selectedNote.id))
-        onCloseModal()
-        ToastAndroid.showWithGravity(
-            'Supprimé',
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM
-        )
+        if (selectedNote?.id) {
+            writeNotes(notes.filter(n => n.id !== selectedNote.id))
+            onCloseModal()
+            ToastAndroid.showWithGravity(
+                'Supprimé',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM
+            )
+        }
     }
 
     return (
@@ -100,4 +108,6 @@ const styles = StyleSheet.create({
 
         elevation: 5,
     },
-})
+});
+
+export default Home;

@@ -1,17 +1,21 @@
 import { useContext, useRef, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
-import EditorHeader from '../../components/Headers/EditorHeader'
+import EditorHeader from "../../components/Headers/EditorHeader";
 import { primaryColor } from "../../styles";
-import { AppContext } from '../../contexts';
+import { AppContext } from "../../contexts";
 import NoteForm from "../../components/Notes/NoteForm";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../App";
 
-export default function NoteShow({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'Notes.show'>;
+
+const NoteShow = ({ navigation, route }: Props) => {
     const { notes, writeNotes } = useContext(AppContext)
     const { note } = route.params
     const [editState, setEditState] = useState(false)
-    const formRef = useRef(null)
+    const formRef = useRef<{ submit: () => any }>(null)
 
-    const onSubmit = ({ title, description }) => {
+    const onSubmit = ({ title, description }: { title: string, description: string }) => {
         writeNotes([...notes.filter(n => n.id !== note.id), { ...note, title, description }])
         ToastAndroid.showWithGravity(
             'Modifié',
@@ -70,3 +74,5 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor
     }
 });
+
+export default NoteShow;

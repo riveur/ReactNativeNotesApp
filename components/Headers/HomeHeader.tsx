@@ -1,10 +1,16 @@
-import { Text, View } from "react-native"
-import Button from "../Button"
-import { FontAwesome } from '@expo/vector-icons'
-import { headerStyle as styles, iconSize } from "../../styles"
-import HeaderBase from "./HeaderBase"
+import { Text, View } from "react-native";
+import Button from "../Button";
+import { FontAwesome } from '@expo/vector-icons';
+import { headerStyle as styles, iconSize } from "../../styles";
+import HeaderBase from "./HeaderBase";
 
-export default function HomeHeader({ onPressSearch, onPressInfo, title }) {
+type Props = {
+    onPressSearch?: () => void;
+    onPressInfo?: () => void;
+    title: string;
+};
+
+const HomeHeader = ({ onPressSearch, onPressInfo, title }: Props) => {
     return (
         <HeaderBase>
             <Text style={[styles.title, styles.headerTextColor]}>{title}</Text>
@@ -19,3 +25,5 @@ export default function HomeHeader({ onPressSearch, onPressInfo, title }) {
         </HeaderBase>
     )
 }
+
+export default HomeHeader;

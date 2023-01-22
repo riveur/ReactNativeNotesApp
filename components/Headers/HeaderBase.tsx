@@ -1,9 +1,10 @@
-import { StatusBar, StyleSheet, View } from "react-native"
-import { primaryColor } from "../../styles"
+import React from 'react';
+import { StyleSheet, View, ViewProps } from "react-native";
+import { primaryColor } from "../../styles";
 
-export default function HeaderBase({ children }) {
+const HeaderBase: React.FC<ViewProps> = ({ children, ...rest }) => {
     return (
-        <View style={styles.container}>
+        <View style={styles.container} {...rest}>
             {children}
         </View>
     )
@@ -19,4 +20,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: primaryColor
     }
-})
+});
+
+export default HeaderBase;

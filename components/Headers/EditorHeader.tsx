@@ -1,10 +1,17 @@
-import { View } from "react-native"
-import Button from "../Button"
-import { FontAwesome } from '@expo/vector-icons'
-import { headerStyle as styles, iconSize } from "../../styles"
-import HeaderBase from "./HeaderBase"
+import { View } from "react-native";
+import Button from "../Button";
+import { FontAwesome } from "@expo/vector-icons";
+import { headerStyle as styles, iconSize } from "../../styles";
+import HeaderBase from "./HeaderBase";
+import React from "react";
 
-export default function EditorHeader({ onPressSave, onPressBack, editState }) {
+type Props = {
+    onPressSave?: () => any;
+    onPressBack?: () => any;
+    editState: boolean;
+};
+
+const EditorHeader: React.FC<Props> = ({ onPressSave, onPressBack, editState }) => {
     return (
         <HeaderBase>
             <Button onPress={onPressBack}>
@@ -18,3 +25,5 @@ export default function EditorHeader({ onPressSave, onPressBack, editState }) {
         </HeaderBase>
     )
 }
+
+export default EditorHeader;

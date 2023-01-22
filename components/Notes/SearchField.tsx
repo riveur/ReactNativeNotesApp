@@ -1,8 +1,15 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { iconSize, placeholderColor, secondaryColor } from "../../styles";
-import { FontAwesome } from '@expo/vector-icons'
+import { StyleSheet, TextInput, TouchableOpacity, View, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
+import { iconSize, secondaryColor } from "../../styles";
+import { FontAwesome } from '@expo/vector-icons';
 
-export default function SearchField({ onChange, onChangeText, value, onPressCancel }) {
+type Props = {
+    onChange: (event: NativeSyntheticEvent<TextInputChangeEventData>) => any;
+    onChangeText: (text: string) => any;
+    value?: string;
+    onPressCancel: () => any;
+};
+
+const SearchField = ({ onChange, onChangeText, value, onPressCancel }: Props) => {
     return (
         <View style={styles.container}>
             <TextInput
@@ -40,4 +47,6 @@ const styles = StyleSheet.create({
         lineHeight: 27,
         fontSize: 20
     }
-})
+});
+
+export default SearchField;

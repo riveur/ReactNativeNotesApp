@@ -1,7 +1,16 @@
+import React from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Note } from "../../hooks/notes";
 import { dangerColor, primaryColor } from "../../styles";
 
-export default function NoteActionsModal({ visible, onRequestClose, onPressDelete, data }) {
+type Props = {
+    visible: boolean;
+    onRequestClose: () => any;
+    onPressDelete: () => any;
+    data: Note | undefined
+};
+
+const NoteActionsModal: React.FC<Props> = ({ visible, onRequestClose, onPressDelete, data }) => {
     const confirmDelete = () => {
         Alert.alert('Confirmation', 'Êtes-vous sûr de vouloir supprimer cet élément ?', [
             { text: 'Non' },
@@ -18,7 +27,7 @@ export default function NoteActionsModal({ visible, onRequestClose, onPressDelet
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.title}>{data?.title}</Text>
+                    <Text style={styles.title}>{data?.title || 'Pas de titre'}</Text>
                     <Pressable
                         style={({ pressed }) => [
                             { opacity: pressed ? 0.6 : 1 },
@@ -87,4 +96,6 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: 'white',
     },
-})
+});
+
+export default NoteActionsModal;
