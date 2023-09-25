@@ -38,34 +38,24 @@ export default function App() {
         <AppContext.Provider value={{ notes, setNotes, readNotes, writeNotes }}>
             <StatusBar backgroundColor={primaryColor} showHideTransition='slide' />
             <NavigationContainer>
-                <Stack.Navigator>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false,
+                }}>
                     <Stack.Screen
                         name='Home'
                         component={Home}
-                        options={{
-                            headerShown: false
-                        }}
                     />
                     <Stack.Screen
                         name='Notes.search'
                         component={NoteSearch}
-                        options={{
-                            headerShown: false
-                        }}
                     />
                     <Stack.Screen
                         name='Notes.show'
                         component={NoteShow}
-                        options={{
-                            headerShown: false
-                        }}
                     />
                     <Stack.Screen
                         name='Notes.create'
                         component={NoteCreate}
-                        options={{
-                            headerShown: false
-                        }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

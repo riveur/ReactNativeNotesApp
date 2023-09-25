@@ -1,45 +1,45 @@
-import { View, StyleSheet, TouchableOpacity, FlatList, ToastAndroid } from "react-native";
+import { View, StyleSheet, TouchableOpacity, FlatList, ToastAndroid, Alert } from "react-native";
 import NoteRow from "../components/Notes/NoteRow";
 import EmptyNotes from "../components/Notes/EmptyNotes";
 import { useContext, useState } from "react";
 import { AppContext } from "../contexts";
-import NoteActionsModal from "../components/Notes/NoteActionsModal";
 import { FontAwesome } from "@expo/vector-icons";
 import { darkColor, primaryColor } from "../styles";
 import HomeHeader from "../components/Headers/HomeHeader";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 import { Note } from "../hooks/notes";
+import CreditModal from "../components/CreditModal";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Home = ({ navigation }: Props) => {
 
     const { notes, writeNotes } = useContext(AppContext)
-
-    const [selectedNote, setSelectedNote] = useState<Note>()
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isVisibleCreditModal, setIsVisibleCreditModal] = useState(false)
 
     const onLongPressItem = (item: Note) => {
-        setIsModalOpen(!isModalOpen)
-        setSelectedNote(notes.find(n => n.id === item.id))
+        Alert.alert('Confirmation', 'Êtes-vous sûr de vouloir supprimer cet élément ?', [
+            { text: 'Non' },
+            { text: 'Oui', onPress: () => onPressDeleteItem(item.id) }
+        ])
     }
 
-    const onCloseModal = () => {
-        setIsModalOpen(!isModalOpen)
-        setSelectedNote(undefined)
+    const onPressItem = (note: Note) => {
+        navigation.navigate('Notes.show', { note })
     }
 
-    const onPressDeleteItem = () => {
-        if (selectedNote?.id) {
-            writeNotes(notes.filter(n => n.id !== selectedNote.id))
-            onCloseModal()
-            ToastAndroid.showWithGravity(
-                'Supprimé',
-                ToastAndroid.LONG,
-                ToastAndroid.BOTTOM
-            )
-        }
+    const onPressDeleteItem = (itemId: Note['id']) => {
+        writeNotes(notes.filter(n => n.id !== itemId))
+        ToastAndroid.showWithGravity(
+            'Supprimé',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM
+        )
+    }
+
+    const onPressInfo = () => {
+        setIsVisibleCreditModal(true)
     }
 
     return (
@@ -47,14 +47,9 @@ const Home = ({ navigation }: Props) => {
             <HomeHeader
                 title='Notes'
                 onPressSearch={() => navigation.navigate('Notes.search')}
+                onPressInfo={onPressInfo}
             />
             <View style={notes.length !== 0 ? styles.container : { ...styles.container, alignItems: 'center', justifyContent: 'center' }}>
-                <NoteActionsModal
-                    visible={isModalOpen}
-                    onRequestClose={() => onCloseModal()}
-                    onPressDelete={() => onPressDeleteItem()}
-                    data={selectedNote}
-                />
                 {notes.length !== 0 ?
                     <FlatList
                         data={notes}
@@ -62,7 +57,7 @@ const Home = ({ navigation }: Props) => {
                             (item) => <NoteRow
                                 note={item.item}
                                 onLongPress={() => onLongPressItem(item.item)}
-                                onPress={() => navigation.navigate('Notes.show', { note: item.item })}
+                                onPress={() => onPressItem(item.item)}
                             />
                         }
                         keyExtractor={item => item.id}
@@ -75,6 +70,12 @@ const Home = ({ navigation }: Props) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <CreditModal
+                visible={isVisibleCreditModal}
+                onRequestClose={() => {
+                    setIsVisibleCreditModal(false)
+                }}
+            />
         </>
     )
 }

@@ -10,20 +10,20 @@ type Props = {
 
 const NoteRow: React.FC<Props> = ({ note, onLongPress, onPress }) => {
     return (
-        <TouchableOpacity onLongPress={onLongPress} onPress={onPress}>
+        <TouchableOpacity activeOpacity={0.6} onLongPress={onLongPress} onPress={onPress}>
             <View style={{ ...styles.container, backgroundColor: note.bgColor || styles.container.backgroundColor }}>
                 <Text style={styles.title}>{note.title}</Text>
                 <Text style={styles.description}>{note.description}</Text>
             </View>
-        </TouchableOpacity >
+        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     itemsCenter: {
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    justifyCenter: {},
     container: {
         backgroundColor: '#ffffff',
         paddingVertical: 22,

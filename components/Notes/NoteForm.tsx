@@ -7,12 +7,13 @@ export type FormProps = {
     ref: React.ForwardedRef<unknown>;
     note?: Note;
     editState?: boolean;
-    onSubmit: ({ title, description }: { title: string, description: string }) => any
+    onSubmit: (data: { title: string, description: string }) => any
 };
 
 const NoteForm: React.FC<FormProps> = React.forwardRef(({ note, editState = true, onSubmit }, ref) => {
     const [title, setTitle] = React.useState(note?.title !== undefined ? note.title : '')
     const [description, setDescription] = React.useState(note?.description !== undefined ? note.description : '')
+    const descriptionFieldRef = React.useRef<TextInput>(null)
 
     const resetNote = () => {
         setTitle('')
@@ -29,10 +30,18 @@ const NoteForm: React.FC<FormProps> = React.forwardRef(({ note, editState = true
                 )
                 return
             }
-            onSubmit.call(this, { title, description })
+            onSubmit({ title, description })
             resetNote()
         }
     }))
+
+    React.useEffect(() => {
+        if (editState && note) {
+            setTimeout(() => {
+                descriptionFieldRef.current?.focus()
+            }, 50)
+        }
+    }, [editState, note])
 
     return (
         <View style={styles.container}>
@@ -54,12 +63,14 @@ const NoteForm: React.FC<FormProps> = React.forwardRef(({ note, editState = true
             </View>
             <View style={styles.formGroup}>
                 <TextInput
+                    ref={descriptionFieldRef}
                     style={{
                         ...styles.input,
                         textAlignVertical: 'top',
                         lineHeight: 31,
                         fontSize: 23,
                         fontWeight: '300',
+                        height: "100%"
                     }}
                     editable={editState}
                     placeholder='Description...'

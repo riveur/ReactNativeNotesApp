@@ -6,6 +6,7 @@ export const darkColor = '#252525';
 export const placeholderColor = '#9A9A9A';
 export const dangerColor = '#FF0000';
 export const infoColor = '#3993DD';
+export const creditTextColor = '#CFCFCF';
 
 const noteColors: string[] = [
     '#FD99FF',

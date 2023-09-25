@@ -28,11 +28,6 @@ const NoteShow = ({ navigation, route }: Props) => {
     const onPressSave = () => {
         if (!editState) {
             setEditState(!editState)
-            ToastAndroid.showWithGravity(
-                'Modification activé !',
-                ToastAndroid.SHORT,
-                ToastAndroid.BOTTOM
-            )
         } else {
             formRef?.current?.submit()
         }
@@ -41,11 +36,6 @@ const NoteShow = ({ navigation, route }: Props) => {
     const onPressBack = () => {
         if (editState) {
             setEditState(!editState)
-            ToastAndroid.showWithGravity(
-                'Modification annulé',
-                ToastAndroid.SHORT,
-                ToastAndroid.BOTTOM
-            )
         } else {
             navigation.goBack()
         }
